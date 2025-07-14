@@ -1,0 +1,31 @@
+.navbar {
+    background-color: cornflowerblue;
+    display: flex;
+    justify-content: space-between;
+    /* Alinea los elementos al principio */
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    /* 🔑 clave para que sea fija */
+    top: 0;
+    /* 🔝 posición superior */
+    z-index: 1000;
+}
+
+.logo {
+    height: 40px;
+    width: auto;
+}
+
+.nav-button {
+    background: none;
+    border: none;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+}
+
+.nav-button:hover {
+    text-decoration: underline;
+}

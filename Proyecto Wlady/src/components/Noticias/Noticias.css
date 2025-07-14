@@ -1,0 +1,119 @@
+.contenido {
+    display: grid;
+    max-height: 770px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 16px;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: repeat(3, 1fr);
+    gap: 16px;
+    background: #fce9e1;
+    /* tono más suave y moderno que lightsalmon */
+    box-sizing: border-box;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.noticiaPreview {
+    height: auto;
+    min-height: 0;
+    max-height: 100%;
+    overflow: hidden;
+    flex: 1;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 16px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.noticiaPreview:not(.noticia-principal) img {
+    width: 100%;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
+.noticiaPreview h1 {
+    margin-top: 0;
+    margin-bottom: 8px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+.noticiaPreview p {
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0;
+    max-height: 4.5em;
+    /* ~3 líneas */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+.noticiaPreview:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.noticiaPrincipal {
+    height: auto;
+    max-height: 100%;
+    background: #d4f4dd;
+    border: 2px solid green;
+    grid-column: 1 / 2;
+    grid-row: 1 / span 3;
+    padding: 20px;
+    overflow: hidden;
+}
+
+.noticiaPrincipal img {
+    height: 450px;
+    width: 100%;
+    margin-bottom: 12px;
+}
+
+.noticiaPrincipal:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.contenido.detalle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 2rem;
+    background: #fce9e1;
+    /* mismo fondo para coherencia */
+}
+
+@media (max-width: 768px) {
+    .contenido {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+    }
+
+    .noticiaPrincipal {
+        grid-column: auto;
+        grid-row: auto;
+        padding: 12px;
+    }
+
+    .noticiaPreview,
+    .noticiaPrincipal {
+        max-height: none;
+    }
+
+    .noticiaPreview img,
+    .noticiaPrincipal img {
+        height: auto;
+        max-height: 300px;
+    }
+}
