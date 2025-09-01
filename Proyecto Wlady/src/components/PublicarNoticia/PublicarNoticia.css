@@ -35,3 +35,23 @@
 .form-noticia button:hover {
   background: #c25c47;
 }
+
+.preview-imagenes,
+.preview-audios,
+.preview-videos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.preview-imagenes img {
+  width: 120px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.preview-audios audio,
+.preview-videos video {
+  flex: 1 1 200px;
+}

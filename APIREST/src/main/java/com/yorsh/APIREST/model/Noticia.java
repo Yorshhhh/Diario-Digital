@@ -1,9 +1,7 @@
 package com.yorsh.APIREST.model;
 
-import com.yorsh.APIREST.model.Periodista;
-
+import java.time.LocalDateTime;
 import java.util.List;
-import org.bson.types.ObjectId;
 
 import org.springframework.data.annotation.Id;
 import lombok.AllArgsConstructor;
@@ -17,12 +15,14 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "noticias")
 public class Noticia {
     @Id
-    private ObjectId id;
+    private String id;
     private String titular;
+    private String lead;
     private String cuerpoNoticia;
     private List<String> imagenes;
     private List<String> audios;
     private List<String> videos;
     private String categoria;
-    private Periodista periodista;
+    private LocalDateTime fechaPublicacion;
+    //private Periodista periodista;
 }
