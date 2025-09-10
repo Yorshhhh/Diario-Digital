@@ -1,38 +1,32 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { publicarNoticia } from '../../API/noticias'
+import { listarCategorias } from '../../API/categorias'
+import { handleImagenChange, handleAudioChange, handleVideoChange, handleCategoriaChange, eliminarImagen, eliminarAudio, eliminarVideo } from './handlers'
+
 import './PublicarNoticia.css'
 
 function PublicarNoticia() {
     const [titular, setTitular] = useState('')
     const [lead, setLead] = useState('')
     const [cuerpoNoticia, setCuerpo] = useState('')
+    const [categoria, setCategoria] = useState([])
+    const [categoriaId, setCategoriaId] = useState('')
     const [imagenes, setImagenes] = useState([])
     const [audios, setAudios] = useState([])
     const [videos, setVideos] = useState([])
 
-    const handleImagenChange = (e) => {
-        setImagenes((prev) => [...prev, ...e.target.files])
-    }
-
-    const handleAudioChange = (e) => {
-        setAudios((prev) => [...e.target.files])
-    }
-
-    const handleVideoChange = (e) => {
-        setVideos((prev) => [...e.target.files])
-    }
-
-    const eliminarImagen = (index) => {
-        setImagenes((prev) => prev.filter((_, i) => i !== index))
-    }
-
-    const eliminarAudio = (index) => {
-        setAudios((prev) => prev.filter((_, i) => i !== index))
-    }
-
-    const eliminarVideo = (index) => {
-        setVideos((prev) => prev.filter((_, i) => i !== index))
-    }
+    useEffect(() => {
+        const fetchCategorias = async () => {
+            try {
+                const data = await listarCategorias();
+                console.log(data);
+                setCategoria(data);
+            } catch (error) {
+                console.error("Error cargando categorias: ", error)
+            }
+        }
+        fetchCategorias();
+    }, [])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -41,6 +35,7 @@ function PublicarNoticia() {
         formData.append("titular", titular)
         formData.append("lead", lead)
         formData.append("cuerpoNoticia", cuerpoNoticia)
+        formData.append("categoriaId", categoriaId)
 
         imagenes.forEach((img) => formData.append("imagenes", img));
         audios.forEach((audio) => formData.append("audios", audio));
@@ -53,6 +48,7 @@ function PublicarNoticia() {
             setTitular("");
             setLead("");
             setCuerpo("");
+            setCategoria("");
             setImagenes([]);
             setAudios([]);
             setVideos([]);
@@ -91,6 +87,15 @@ function PublicarNoticia() {
                 rows="10"
                 required
             ></textarea>
+            <label htmlFor='categoria'>Categoría Noticiosa</label>
+            <select value={categoriaId} onChange={(e) => handleCategoriaChange(e, setCategoriaId)}>
+                <option value="">-- Selecciona Categoría</option>
+                {categoria.map((cat) => (
+                    <option key={cat.categoriaId} value={cat.categoriaId}>
+                        {cat.nombreCategoria} - {cat.descripcionCategoria}
+                    </option>
+                ))}
+            </select>
 
             <label htmlFor="imagenes">Imágenes</label>
             <input
@@ -98,7 +103,7 @@ function PublicarNoticia() {
                 id="imagenes"
                 multiple
                 accept="image/*"
-                onChange={handleImagenChange}
+                onChange={(e) => handleImagenChange(e, setImagenes)}
             />
 
             {imagenes.length > 0 && (
@@ -137,7 +142,7 @@ function PublicarNoticia() {
                 id='audios'
                 multiple
                 accept='audio/*'
-                onChange={handleAudioChange}
+                onChange={(e) => handleAudioChange(e, setAudios)}
             />
             {audios.length > 0 && (
                 <div className='preview-audios'>
@@ -174,7 +179,7 @@ function PublicarNoticia() {
 
             <label htmlFor='videos'>Videos</label>
             <input type="file" id='videos' multiple accept='video/*'
-                onChange={handleVideoChange} />
+                onChange={(e) => handleVideoChange(e, setVideos)} />
 
             {videos.length > 0 && (
                 <div className='preview-videos'>

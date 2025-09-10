@@ -8,7 +8,8 @@ export const publicarNoticia = async (formData) => {
         if(!response.ok){
             throw new Error("Error desde el JS")
         }
-         return await response.json()
+         return await response.json();
+         
     } catch (error) {
         console.error("Error desde el Catch: ", error)
     }
